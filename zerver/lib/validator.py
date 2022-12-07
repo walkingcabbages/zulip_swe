@@ -101,12 +101,15 @@ def check_phone_number(var_name: str, val: object) -> str:
     if not isinstance(val, str):
         raise ValidationError(
             _("Invalid {var_name}").format(var_name=var_name))
-    if (not val.isnumeric()):
-        raise ValidationError("Invalid phone number - numeric")
-    phone_number = phonenumbers.parse('+' + val)
-    if not phonenumbers.is_possible_number(phone_number):
+    if val[0] != '+':
+        val = '+' + val
+    phone_number = ''
+    try:
+        phone_number = phonenumbers.parse(val)
+    except phonenumbers.NumberParseException:
         raise ValidationError("Invalid phone number")
-
+    if not phonenumbers.is_valid_number(phone_number):
+        raise ValidationError("Invalid phone number")
     return check_capped_string(50)(var_name, val)
 
 
