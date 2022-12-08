@@ -364,6 +364,16 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         result = self.client_post("/json/realm/profile_fields", info=data)
         self.assert_json_success(result)
 
+     def test_create_field_of_type_phoneNumber(self) -> None:
+        self.login("iago")
+        data = {
+            "name": "Your mentor",
+            "hint": "",
+            "field_type": CustomProfileField.PHONE_NUMBER,
+        }
+        result = self.client_post("/json/realm/profile_fields", info=data)
+        self.assert_json_success(result)
+
     def test_create_field_of_type_pronouns(self) -> None:
         self.login("iago")
         data = {
@@ -657,7 +667,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.login("iago")
         realm = get_realm("zulip")
         fields: List[Tuple[str, Union[str, List[int]]]] = [
-            ("Phone number", "*short* text data"),
+            ("Phone number", "+14129339037"),
             ("Biography", "~~short~~ **long** text data"),
             ("Favorite food", "long short text data"),
             ("Favorite editor", "0"),
