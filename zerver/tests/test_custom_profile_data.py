@@ -364,7 +364,7 @@ class CreateCustomProfileFieldTest(CustomProfileFieldTestCase):
         result = self.client_post("/json/realm/profile_fields", info=data)
         self.assert_json_success(result)
 
-     def test_create_field_of_type_phoneNumber(self) -> None:
+    def test_create_field_of_type_phoneNumber(self) -> None:
         self.login("iago")
         data = {
             "name": "Your mentor",
