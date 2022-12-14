@@ -503,7 +503,7 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
         result = self.client_patch(
             f"/json/realm/profile_fields/{field.id}",
             info={
-                "name": "{hone number",
+                "name": "Phone number",
                 "hint": "*" * 81,
             },
         )
@@ -641,10 +641,20 @@ class UpdateCustomProfileFieldTest(CustomProfileFieldTestCase):
         self.assert_json_error(result, "Field id 1234 not found.")
 
     def test_update_invalid_short_text(self) -> None:
+        field_name = "Favorite food"
+        self.assert_error_update_invalid_value(
+            field_name, "t" * 201, f"{field_name} is too long (limit: 50 characters)"
+        )
+
+    def test_update_invalid_phone_number(self) -> None:
         field_name = "Phone number"
         self.assert_error_update_invalid_value(
-            field_name, "t" * 201, "Phone number is not a valid number format"
+            field_name, "t" * 201, f"{field_name} is not a valid number format"
         )
+        self.assert_error_update_invalid_value(
+            field_name, "+123344567780", f"{field_name} is not a valid phone number"
+        )
+        self.assert_error_update_invalid_value(field_name, [123], f"Invalid {field_name}")
 
     def test_update_invalid_date(self) -> None:
         field_name = "Birthday"
