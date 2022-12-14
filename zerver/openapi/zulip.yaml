@@ -1644,8 +1644,8 @@ paths:
                                       {
                                         "id": 1,
                                         "name": "Phone number",
-                                        "type": 1,
-                                        "hint": "",
+                                        "type": 9,
+                                        "hint": "Please add +country code in front of number!",
                                         "field_data": "",
                                         "order": 1,
                                       },
@@ -8499,7 +8499,7 @@ paths:
                               "id": 1,
                               "name": "Phone number",
                               "type": 9,
-                              "hint": "",
+                              "hint": "Please add +country code in front of number!",
                               "field_data": "",
                               "order": 1,
                             },
@@ -8640,7 +8640,7 @@ paths:
             - **6**: Person picker
             - **7**: External account
             - **8**: Pronouns
-            - **9**: Phone Number
+            - **9**: Phone number
 
             **Changes**: Field type `9` added in Zulip 6.0 (feature level 157).
           schema:

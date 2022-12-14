@@ -99,11 +99,15 @@ def check_phone_number(var_name: str, val: object) -> str:
         raise ValidationError(_("Invalid {var_name}").format(var_name=var_name))
     try:
         phone_number = phonenumbers.parse(val)
+        if not phonenumbers.is_valid_number(phone_number):
+            raise ValidationError(
+                _("{var_name} is not a valid phone number").format(var_name=var_name)
+            )
+        return check_capped_string(50)(var_name, val)
     except phonenumbers.NumberParseException:
-        raise ValidationError("Invalid phone number")
-    if not phonenumbers.is_valid_number(phone_number):
-        raise ValidationError("Invalid phone number")
-    return check_capped_string(50)(var_name, val)
+        raise ValidationError(
+            _("{var_name} is not a valid number format").format(var_name=var_name)
+        )
 
 
 def check_short_string(var_name: str, val: object) -> str:
